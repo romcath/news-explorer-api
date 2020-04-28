@@ -25,12 +25,12 @@ const articleSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
-    validate: [validator.isUrl, 'Некорректный формат ссылки на статью'],
+    validate: [validator.isURL, 'Некорректный формат ссылки на статью'],
   },
   image: {
     type: String,
     required: true,
-    validate: [validator.isUrl, 'Некорректный формат ссылки на иллюстрацию к статье'],
+    validate: [validator.isURL, 'Некорректный формат ссылки на иллюстрацию к статье'],
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

@@ -10,6 +10,7 @@ const { PORT, DATABASE } = require('./config');
 const { createUser, login } = require('./controllers/users');
 const { createUserValidation, loginUserValidation } = require('./middlewares/user-validation');
 const routesUsers = require('./routes/users');
+const routesArticles = require('./routes/articles');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.post('/signin', loginUserValidation, login);
 
 app.use(auth);
 app.use(routesUsers);
+app.use(routesArticles);
 
 app.use(errors());
 
