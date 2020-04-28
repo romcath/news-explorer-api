@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const { PORT, DATABASE } = require('./config');
+const routesUsers = require('./routes/users');
 
 const app = express();
 
@@ -15,6 +16,8 @@ mongoose.connect(DATABASE, {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+
+app.use(routesUsers);
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
