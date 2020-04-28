@@ -6,6 +6,12 @@ const beautifyUnique = require('mongoose-beautiful-unique-validation');
 const UnauthorizedError = require('../errors/unauthorized');
 
 const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 30,
+  },
   email: {
     type: String,
     required: true,
@@ -18,12 +24,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 8,
     select: false,
-  },
-  name: {
-    type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 30,
   },
 });
 
