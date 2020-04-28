@@ -1,7 +1,9 @@
 const route = require('express').Router();
 
-const { createArticle } = require('../controllers/articles');
+const { createArticle, getAllArticles } = require('../controllers/articles');
+const { articleValidation } = require('../middlewares/article-validation');
 
-route.post('/articles', createArticle);
+route.get('/articles', getAllArticles);
+route.post('/articles', articleValidation, createArticle);
 
 module.exports = route;
