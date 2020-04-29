@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const helmet = require('helmet');
 
 const errorHandler = require('./middlewares/error-handler');
 const auth = require('./middlewares/auth');
@@ -10,11 +11,13 @@ const { PORT, DATABASE } = require('./config');
 const { createUser, login } = require('./controllers/users');
 const { createUserValidation, loginUserValidation } = require('./middlewares/user-validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const routesUsers = require('./routes/users');
-const routesArticles = require('./routes/articles');
+const routes = require('./routes/index');
+const { limiter } = require('./middlewares/rate-limiter');
 
 const app = express();
 
+app.use(helmet());
+app.use(limiter);
 app.use(cookieParser());
 
 app.use(bodyParser.json());
@@ -33,8 +36,7 @@ app.post('/signup', createUserValidation, createUser);
 app.post('/signin', loginUserValidation, login);
 
 app.use(auth);
-app.use(routesUsers);
-app.use(routesArticles);
+app.use(routes);
 
 app.use(errorLogger);
 
