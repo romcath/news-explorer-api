@@ -1,8 +1,10 @@
 const rateLimit = require('express-rate-limit');
 
+const { TIME, LIMIT_REQUESTS } = require('../config/config');
+
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: TIME,
+  max: LIMIT_REQUESTS,
 });
 
 module.exports = {

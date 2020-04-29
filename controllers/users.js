@@ -2,15 +2,16 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const { SECRET } = require('../config');
+const { USER_NOT_FOUND, USER_EMAIL_CONFLICT, USER_CAN_NOT_CREATE } = require('../config/constants');
+const { SECRET, LIFETIME_COOKIES } = require('../config/config');
 
 const NotFoundError = require('../errors/not-found-err');
 const ConflictError = require('../errors/conflict');
 
-// Возвращает информацию о пользователе (email и имя)
+// Возвращает информацию о пользователе
 const getUserMe = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(new NotFoundError(`Нет пользователя с id ${req.user._id}`))
+    .orFail(new NotFoundError(USER_NOT_FOUND))
     .then(user => res.send(user))
     .catch(next);
 };
@@ -26,10 +27,10 @@ const createUser = (req, res, next) => {
     .then(user => res.status(201).send(user.omitPrivate()))
     .catch(err => {
       if (err.errors.email) {
-        next(new ConflictError(`Почта ${email} уже используется`));
+        next(new ConflictError(USER_EMAIL_CONFLICT));
         return;
       }
-      next(new Error('Ошибка при создании пользователя'));
+      next(new Error(USER_CAN_NOT_CREATE));
     });
 };
 
@@ -40,7 +41,7 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then(user => {
       const token = jwt.sign({ _id: user._id }, SECRET);
-      res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true, sameSite: true }).end();
+      res.cookie('jwt', token, { maxAge: LIFETIME_COOKIES, httpOnly: true, sameSite: true }).end();
     })
     .catch(next);
 };

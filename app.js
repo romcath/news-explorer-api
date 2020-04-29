@@ -7,7 +7,7 @@ const helmet = require('helmet');
 
 const errorHandler = require('./middlewares/error-handler');
 const auth = require('./middlewares/auth');
-const { PORT, DATABASE } = require('./config');
+const { PORT, DATABASE } = require('./config/config');
 const { createUser, login } = require('./controllers/users');
 const { createUserValidation, loginUserValidation } = require('./middlewares/user-validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
