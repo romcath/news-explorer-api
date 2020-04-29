@@ -2,8 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const { USER_NOT_FOUND, USER_EMAIL_CONFLICT, USER_CAN_NOT_CREATE } = require('../config/constants');
-const { SECRET, LIFETIME_COOKIES } = require('../config/config');
+const { USER_NOT_FOUND, USER_EMAIL_CONFLICT, USER_CAN_NOT_CREATE } = require('../configuration/constants');
+const { SECRET, LIFETIME_COOKIES } = require('../configuration/config');
 
 const NotFoundError = require('../errors/not-found-err');
 const ConflictError = require('../errors/conflict');

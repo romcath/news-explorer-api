@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 const UnauthorizedError = require('../errors/unauthorized');
-const { USER_EMAIL_INCORRECT, INCORRECT_EMAIL_PASS } = require('../config/constants');
+const { USER_EMAIL_INCORRECT, INCORRECT_EMAIL_PASS } = require('../configuration/constants');
 
 const userSchema = new mongoose.Schema({
   name: {

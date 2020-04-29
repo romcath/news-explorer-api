@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const { ARTICLE_IMAGE_URL, ARTICLE_LINK_URL } = require('../config/constants');
+const { ARTICLE_IMAGE_INCORRECT, ARTICLE_LINK_INCORRECT } = require('../configuration/constants');
 
 const articleSchema = new mongoose.Schema({
   keyword: {
@@ -27,12 +27,12 @@ const articleSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
-    validate: [validator.isURL, ARTICLE_LINK_URL],
+    validate: [validator.isURL, ARTICLE_LINK_INCORRECT],
   },
   image: {
     type: String,
     required: true,
-    validate: [validator.isURL, ARTICLE_IMAGE_URL],
+    validate: [validator.isURL, ARTICLE_IMAGE_INCORRECT],
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -40,5 +40,11 @@ const articleSchema = new mongoose.Schema({
     select: false,
   },
 });
+
+articleSchema.methods.omitPrivate = function () {
+  const obj = this.toObject();
+  delete obj.owner;
+  return obj;
+};
 
 module.exports = mongoose.model('article', articleSchema);

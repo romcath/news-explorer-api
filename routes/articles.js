@@ -1,7 +1,7 @@
 const route = require('express').Router();
 
 const { createArticle, getAllArticles, deleteArticleID } = require('../controllers/articles');
-const { articleValidation, articleIdValidation } = require('../middlewares/article-validation');
+const { articleValidation, articleIdValidation } = require('../validation/article-validation');
 
 route.get('/articles', getAllArticles);
 route.post('/articles', articleValidation, createArticle);

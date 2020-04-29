@@ -1,4 +1,4 @@
-const { ERROR_SERVER } = require('../config/constants');
+const { SERVER_ERROR } = require('../configuration/constants');
 
 module.exports = (err, req, res, next) => {
   const { statusCode = 500, message } = err;
@@ -6,7 +6,7 @@ module.exports = (err, req, res, next) => {
   res.status(statusCode).send(
     {
       message: statusCode === 500
-        ? ERROR_SERVER
+        ? SERVER_ERROR
         : message,
     },
   );
