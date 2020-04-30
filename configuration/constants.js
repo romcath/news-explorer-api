@@ -1,3 +1,5 @@
+const NOT_FOUND = 'Запрашиваемый ресурс не найден';
+
 const ARTICLE_NOT_FOUND = 'Нет статьи с таким id';
 const ARTICLE_REMOVED = 'Статья удалена';
 const ARTICLE_CAN_NOT_DEL = 'Вы не можете удалить статью, которую не сохраняли';
@@ -26,6 +28,8 @@ const VALIDATION_ERRORS = {
 };
 
 module.exports = {
+  NOT_FOUND,
+
   ARTICLE_NOT_FOUND,
   ARTICLE_REMOVED,
   ARTICLE_CAN_NOT_DEL,

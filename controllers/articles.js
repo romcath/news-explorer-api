@@ -3,7 +3,9 @@ const Article = require('../models/article');
 const NotFoundError = require('../errors/not-found-err');
 const ForbiddenError = require('../errors/forbidden-err');
 
-const { ARTICLE_NOT_FOUND, ARTICLE_CAN_NOT_DEL, ARTICLE_REMOVED, USER_NOT_ARTICLE } = require('../configuration/constants');
+const {
+  ARTICLE_NOT_FOUND, ARTICLE_CAN_NOT_DEL, ARTICLE_REMOVED, USER_NOT_ARTICLE,
+} = require('../configuration/constants');
 
 // Возвращает все сохранённые пользователем статьи
 const getAllArticles = (req, res, next) => {
