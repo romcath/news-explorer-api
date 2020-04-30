@@ -7,7 +7,6 @@ const ARTICLE_LINK_INCORRECT = 'Некорректный формат ссылк
 const ARTICLE_IMAGE_INCORRECT = 'Некорректный формат ссылки на иллюстрацию к статье';
 
 const USER_NOT_FOUND = 'Нет пользователя с таким id';
-const USER_NOT_ARTICLE = 'У вас нет сохранённых статей';
 const USER_CAN_NOT_CREATE = 'Ошибка при создании пользователя';
 const USER_EMAIL_CONFLICT = 'Электронная почта уже существует';
 const USER_EMAIL_INCORRECT = 'Некорректный формат для электронной почты';
@@ -37,7 +36,6 @@ module.exports = {
   ARTICLE_IMAGE_INCORRECT,
 
   USER_NOT_FOUND,
-  USER_NOT_ARTICLE,
   USER_CAN_NOT_CREATE,
   USER_EMAIL_CONFLICT,
   USER_EMAIL_INCORRECT,

@@ -4,18 +4,13 @@ const NotFoundError = require('../errors/not-found-err');
 const ForbiddenError = require('../errors/forbidden-err');
 
 const {
-  ARTICLE_NOT_FOUND, ARTICLE_CAN_NOT_DEL, ARTICLE_REMOVED, USER_NOT_ARTICLE,
+  ARTICLE_NOT_FOUND, ARTICLE_CAN_NOT_DEL, ARTICLE_REMOVED,
 } = require('../configuration/constants');
 
 // Возвращает все сохранённые пользователем статьи
 const getAllArticles = (req, res, next) => {
   Article.find({ owner: req.user._id })
-    .then((article) => {
-      if (article.length === 0) {
-        throw new NotFoundError(USER_NOT_ARTICLE);
-      }
-      res.send(article);
-    })
+    .then((article) => res.send(article))
     .catch(next);
 };
 
