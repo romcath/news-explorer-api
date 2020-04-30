@@ -12,7 +12,7 @@ const ConflictError = require('../errors/conflict');
 const getUserMe = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(new NotFoundError(USER_NOT_FOUND))
-    .then(user => res.send(user))
+    .then((user) => res.send(user))
     .catch(next);
 };
 
@@ -21,11 +21,11 @@ const createUser = (req, res, next) => {
   const { name, email, password } = req.body;
 
   bcrypt.hash(password, 10)
-    .then(hash => User.create({
+    .then((hash) => User.create({
       name, email, password: hash,
     }))
-    .then(user => res.status(201).send(user.omitPrivate()))
-    .catch(err => {
+    .then((user) => res.status(201).send(user.omitPrivate()))
+    .catch((err) => {
       if (err.errors.email) {
         next(new ConflictError(USER_EMAIL_CONFLICT));
         return;
@@ -39,7 +39,7 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
-    .then(user => {
+    .then((user) => {
       const token = jwt.sign({ _id: user._id }, SECRET);
       res.cookie('jwt', token, { maxAge: LIFETIME_COOKIES, httpOnly: true, sameSite: true }).end();
     })

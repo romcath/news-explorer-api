@@ -10,7 +10,7 @@ const {
 // Возвращает все сохранённые пользователем статьи
 const getAllArticles = (req, res, next) => {
   Article.find({ owner: req.user._id })
-    .then(article => {
+    .then((article) => {
       if (article.length === 0) {
         throw new NotFoundError(USER_NOT_ARTICLE);
       }
@@ -24,7 +24,7 @@ const createArticle = (req, res, next) => {
   const { _id: owner } = req.user;
 
   Article.create({ ...req.body, owner })
-    .then(article => res.status(201).send(article.omitPrivate()))
+    .then((article) => res.status(201).send(article.omitPrivate()))
     .catch(next);
 };
 
@@ -33,7 +33,7 @@ const deleteArticleID = (req, res, next) => {
   Article.findById(req.params.articleId)
     .select('+owner')
     .orFail(new NotFoundError(ARTICLE_NOT_FOUND))
-    .then(article => {
+    .then((article) => {
       if (!article.owner.equals(req.user._id)) {
         throw new ForbiddenError(ARTICLE_CAN_NOT_DEL);
       }

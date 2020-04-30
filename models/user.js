@@ -28,12 +28,12 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.statics.findUserByCredentials = function (email, password) {
+userSchema.statics.findUserByCredentials = function findUserByCredentials(email, password) {
   return this.findOne({ email })
     .select('+password')
     .orFail(new UnauthorizedError(INCORRECT_EMAIL_PASS))
-    .then(user => bcrypt.compare(password, user.password)
-      .then(matched => {
+    .then((user) => bcrypt.compare(password, user.password)
+      .then((matched) => {
         if (!matched) {
           return Promise.reject(new UnauthorizedError(INCORRECT_EMAIL_PASS));
         }
@@ -41,7 +41,7 @@ userSchema.statics.findUserByCredentials = function (email, password) {
       }));
 };
 
-userSchema.methods.omitPrivate = function () {
+userSchema.methods.omitPrivate = function omitPrivate() {
   const obj = this.toObject();
   delete obj.password;
   return obj;
