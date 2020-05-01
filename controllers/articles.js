@@ -24,7 +24,7 @@ const createArticle = (req, res, next) => {
 };
 
 // Удаляет сохранённую статью по _id
-const deleteArticleID = (req, res, next) => {
+const deleteArticleByID = (req, res, next) => {
   Article.findById(req.params.articleId)
     .select('+owner')
     .orFail(new NotFoundError(ARTICLE_NOT_FOUND))
@@ -41,5 +41,5 @@ const deleteArticleID = (req, res, next) => {
 module.exports = {
   createArticle,
   getAllArticles,
-  deleteArticleID,
+  deleteArticleByID,
 };

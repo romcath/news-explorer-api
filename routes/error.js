@@ -1,7 +1,7 @@
 const route = require('express').Router();
 
-const { error } = require('../controllers/error');
+const { notFoundRoute } = require('../controllers/not-found-route');
 
-route.all('*', error);
+route.all('*', notFoundRoute);
 
 module.exports = route;

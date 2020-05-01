@@ -7,11 +7,8 @@ const { errors } = require('celebrate');
 const helmet = require('helmet');
 
 const errorHandler = require('./middlewares/error-handler');
-const auth = require('./middlewares/auth');
 const routes = require('./routes/index');
 const { PORT, DATABASE } = require('./configuration/config');
-const { createUser, login } = require('./controllers/users');
-const { createUserValidation, loginUserValidation } = require('./validation/user-validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { limiter } = require('./middlewares/rate-limiter');
 
@@ -33,10 +30,6 @@ mongoose.connect(DATABASE, {
 
 app.use(requestLogger);
 
-app.post('/signup', createUserValidation, createUser);
-app.post('/signin', loginUserValidation, login);
-
-app.use(auth);
 app.use(routes);
 
 app.use(errorLogger);
