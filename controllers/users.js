@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const { USER_NOT_FOUND, USER_EMAIL_CONFLICT, USER_CAN_NOT_CREATE } = require('../configuration/constants');
+const { USER_NOT_FOUND, USER_EMAIL_CONFLICT, USER_CAN_NOT_CREATE, LOGOUT } = require('../configuration/constants');
 const { SECRET, LIFETIME_COOKIES } = require('../configuration/config');
 
 const NotFoundError = require('../errors/not-found-err');
@@ -24,8 +24,12 @@ const createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, email, password: hash,
     }))
-    .then((user) => res.status(201).send(user.omitPrivate()))
+    .then((user) => {
+      res.clearCookie('jwt');
+      res.status(201).send(user.omitPrivate());
+    })
     .catch((err) => {
+      res.clearCookie('jwt');
       if (err.errors.email) {
         next(new ConflictError(USER_EMAIL_CONFLICT));
         return;
@@ -41,15 +45,26 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, SECRET);
-      res.cookie('jwt', token, { maxAge: LIFETIME_COOKIES, httpOnly: true, sameSite: true });
-      res.send({token});
+      res.cookie('jwt', token, { maxAge: LIFETIME_COOKIES, httpOnly: true });
+      res.send({});
     })
-    .catch(next);
+    .catch((err) => {
+      res.clearCookie('jwt');
+      next(err);
+    });
 };
 
+const logout = (req, res, next) => {
+  try {
+    res.cookie('jwt', '', { maxAge: 0, httpOnly: true }).send({ message: LOGOUT });
+  } catch (err) {
+    return next();
+  }
+};
 
 module.exports = {
   getUserMe,
   createUser,
   login,
+  logout,
 };

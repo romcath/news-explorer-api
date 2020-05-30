@@ -15,7 +15,13 @@ const { limiter } = require('./middlewares/rate-limiter');
 
 const app = express();
 
-app.use(cors(({origin:true, credentials: true})));
+app.use(cors(({
+  origin: [
+    'http://localhost:8080',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+})));
 app.use(helmet());
 app.use(limiter);
 app.use(cookieParser());
