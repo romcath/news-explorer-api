@@ -18,6 +18,7 @@ const app = express();
 app.use(cors(({
   origin: [
     'http://localhost:8080',
+    'https://news-app.cf',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
