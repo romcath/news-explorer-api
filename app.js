@@ -19,6 +19,7 @@ app.use(cors(({
   origin: [
     'http://localhost:8080',
     'https://news-app.cf',
+    'https://romcath.github.io/news-explorer-frontend',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
