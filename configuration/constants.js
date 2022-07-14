@@ -1,4 +1,5 @@
 const NOT_FOUND = 'Запрашиваемый ресурс не найден';
+const LOGOUT = 'Вы вышли из системы';
 
 const ARTICLE_NOT_FOUND = 'Нет статьи с таким id';
 const ARTICLE_REMOVED = 'Статья удалена';
@@ -28,6 +29,7 @@ const VALIDATION_ERRORS = {
 
 module.exports = {
   NOT_FOUND,
+  LOGOUT,
 
   ARTICLE_NOT_FOUND,
   ARTICLE_REMOVED,

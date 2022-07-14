@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
+const cors = require('cors');
 
 const errorHandler = require('./middlewares/error-handler');
 const routes = require('./routes/index');
@@ -14,6 +15,15 @@ const { limiter } = require('./middlewares/rate-limiter');
 
 const app = express();
 
+app.use(cors(({
+  origin: [
+    'http://localhost:8080',
+    'https://news-app.cf',
+    'https://romcath.github.io',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+})));
 app.use(helmet());
 app.use(limiter);
 app.use(cookieParser());
